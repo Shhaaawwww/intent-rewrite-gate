@@ -1,6 +1,6 @@
 {
-  "name": "dsh-intent-rewrite-gate",
-  "version": "0.2.1",
+  "name": "dsh-vibe-intent-compiler",
+  "version": "0.3.0",
   "description": "A conservative intent compiler for Vibe Coders in DeepSeek Harness: clarify messy drafts without inventing details, then fill the result back into the composer.",
   "type": "module",
   "engines": {
@@ -30,11 +30,11 @@
     "vibe-coding",
     "intent",
     "intent-compiler",
-    "prompt-rewrite"
+    "prompt-compiler"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shhaaawwww/intent-rewrite-gate.git"
+    "url": "git+https://github.com/Shhaaawwww/vibe-intent-compiler.git"
   },
   "license": "MIT",
   "peerDependencies": {

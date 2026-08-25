@@ -1,4 +1,4 @@
 # Loaded by `dsh plugin add` through package.json's dsh.bundle declaration.
 - insert:
-    - id: intent-rewrite-gate
-      name: 'dsh-intent-rewrite-gate'
+    - id: vibe-intent-compiler
+      name: 'dsh-vibe-intent-compiler'

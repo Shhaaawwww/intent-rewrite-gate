@@ -4,8 +4,6 @@
 
 一个即插即用的 DeepSeek Harness 插件：把 Vibe Coder 的混乱草稿整理成简洁、忠实、可执行的指令，并且不擅自增加细节。
 
-> 仓库与插件技术标识仍为 `intent-rewrite-gate`，暂时保留以兼容现有安装链接。
-
 它不是通用的“提示词增强器”。插件只读取 DeepSeek Harness 输入框中尚未发送的完整草稿，仅重新组织用户已经表达的内容，然后原位回填。是否继续修改、是否发送，始终由用户决定。
 
 ## 安装
@@ -14,23 +12,23 @@
 
 ```bash
 npm install -g @deepseek-ai/dsh
-dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 dsh web
 ```
 
-安装后重启 Web UI，输入框发送按钮旁会出现 `✦ 整理意图`。
+安装后重启 Web UI，输入框发送按钮旁会出现 `✦ 编译意图`。
 
 如果通过 `npx` 使用 Harness：
 
 ```bash
-npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
+npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 npx @deepseek-ai/dsh web
 ```
 
 ## 使用
 
 1. 在输入框中写下自然、零散或反复修正的需求。
-2. 点击 `✦ 整理意图`。
+2. 点击 `✦ 编译意图`。
 3. 检查回填结果，按需继续编辑，然后自行发送。
 
 示例：
@@ -63,7 +61,7 @@ npx @deepseek-ai/dsh web
 ## 本地安装
 
 ```bash
-dsh plugin --profile web add /absolute/path/to/intent-rewrite-gate
+dsh plugin --profile web add /absolute/path/to/vibe-intent-compiler
 dsh web
 ```
 

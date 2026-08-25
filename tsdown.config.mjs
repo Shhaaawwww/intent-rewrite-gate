@@ -1,4 +1,4 @@
-const ID = 'dsh-intent-rewrite-gate'
+const ID = 'dsh-vibe-intent-compiler'
 
 const PLATFORM_MODULES = [
   'react',

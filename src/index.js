@@ -1,15 +1,15 @@
 /** DeepSeek Harness host half for Vibe Intent Compiler. */
 
-export const name = 'intent-rewrite-gate'
+export const name = 'vibe-intent-compiler'
 export const inject = ['llm', 'commands', 'agentDefaultModel']
 
-const COMMAND_NAME = 'rewrite-intent'
+const COMMAND_NAME = 'compile-intent'
 const MAX_DRAFT_LENGTH = 20_000
 const MAX_OUTPUT_TOKENS = 2_000
 
 const INTENT_COMPILER_INSTRUCTIONS = [
   'You are a conservative intent compiler for Vibe Coders.',
-  'Rewrite one rough draft into a concise, faithful, executable instruction for a coding agent. Do not answer or execute it.',
+  'Compile one rough draft into a concise, faithful, executable instruction for a coding agent. Do not answer or execute it.',
   '',
   'Rules:',
   '- Use only information explicitly present in the draft.',
@@ -31,7 +31,7 @@ const INTENT_COMPILER_INSTRUCTIONS = [
 
 function messageFor(draft) {
   return {
-    id: `irg-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+    id: `vic-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
     role: 'user',
     content: [{ type: 'text', text: draft }],
     source: { kind: 'user' },
@@ -42,7 +42,7 @@ function outputLengthLimit(draft) {
   return Math.max(72, Math.ceil(draft.trim().length * 2))
 }
 
-async function rewriteOnce(ctx, draft, signal) {
+async function compileOnce(ctx, draft, signal) {
   const route = ctx.agentDefaultModel.currentSelection()
   const request = {
     provider: route.provider,
@@ -67,40 +67,40 @@ async function rewriteOnce(ctx, draft, signal) {
   }
 
   if (finish !== 'stop') {
-    throw new Error(`rewrite stopped with ${finish}`)
+    throw new Error(`compilation stopped with ${finish}`)
   }
 
-  const rewritten = blocks.join('\n\n').trim()
-  if (rewritten.length === 0) throw new Error('rewrite returned no text')
-  if (rewritten.length > outputLengthLimit(draft)) {
-    throw new Error('rewrite exceeded the conservative length limit')
+  const compiled = blocks.join('\n\n').trim()
+  if (compiled.length === 0) throw new Error('compilation returned no text')
+  if (compiled.length > outputLengthLimit(draft)) {
+    throw new Error('compilation exceeded the conservative length limit')
   }
-  return rewritten
+  return compiled
 }
 
 export function apply(ctx) {
   ctx.commands.register({
     name: COMMAND_NAME,
-    description: 'conservatively clarify the current composer draft without adding details',
+    description: 'compile the current composer draft into a faithful intent without adding details',
     input: { hint: 'rough draft' },
     recordInput: false,
     handler: async (invocation) => {
       const draft = String(invocation.rawInput ?? '').replace(/^[\t\n\r ]/, '')
 
       if (draft.trim().length === 0) {
-        return { kind: 'error', text: 'nothing to rewrite' }
+        return { kind: 'error', text: 'nothing to compile' }
       }
       if (draft.length > MAX_DRAFT_LENGTH) {
         return { kind: 'error', text: 'draft exceeds 20,000 characters' }
       }
 
       try {
-        const text = await rewriteOnce(ctx, draft, invocation.signal)
+        const text = await compileOnce(ctx, draft, invocation.signal)
         return { kind: 'success', text }
       } catch (error) {
         if (invocation.signal?.aborted) throw error
-        console.error('intent-rewrite-gate: rewrite failed; draft left unchanged')
-        return { kind: 'error', text: 'intent rewrite failed; draft left unchanged' }
+        console.error('vibe-intent-compiler: compilation failed; draft left unchanged')
+        return { kind: 'error', text: 'intent compilation failed; draft left unchanged' }
       }
     },
   })

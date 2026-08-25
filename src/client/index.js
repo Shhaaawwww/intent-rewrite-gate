@@ -2,48 +2,48 @@
 
 import { createElement, useEffect, useRef, useState } from 'react'
 
-export const name = 'intent-rewrite-gate'
+export const name = 'vibe-intent-compiler'
 export const inject = ['slots', 'remote', 'remote.commands', 'locale']
 
-const ID = 'dsh-intent-rewrite-gate'
-const COMMAND_NAME = 'rewrite-intent'
+const ID = 'dsh-vibe-intent-compiler'
+const COMMAND_NAME = 'compile-intent'
 const MAX_DRAFT_LENGTH = 20_000
 
 const CSS = `
-.irg-button { display: inline-flex; align-items: center; gap: 5px; height: 24px;
+.vic-button { display: inline-flex; align-items: center; gap: 5px; height: 24px;
   border: 1px solid rgba(127,127,127,.35); background: transparent; color: inherit;
   border-radius: 999px; padding: 0 9px; font: inherit; font-size: 12px; line-height: 1;
   cursor: pointer; opacity: .8; white-space: nowrap; }
-.irg-button:hover:not(:disabled) { opacity: 1; background: rgba(127,127,127,.12); }
-.irg-button:disabled { cursor: default; opacity: .4; }
-.irg-spinner { width: 11px; height: 11px; border: 1.5px solid currentColor;
-  border-right-color: transparent; border-radius: 50%; animation: irg-spin .8s linear infinite; }
-@keyframes irg-spin { to { transform: rotate(360deg); } }
+.vic-button:hover:not(:disabled) { opacity: 1; background: rgba(127,127,127,.12); }
+.vic-button:disabled { cursor: default; opacity: .4; }
+.vic-spinner { width: 11px; height: 11px; border: 1.5px solid currentColor;
+  border-right-color: transparent; border-radius: 50%; animation: vic-spin .8s linear infinite; }
+@keyframes vic-spin { to { transform: rotate(360deg); } }
 `
 
 const ZH = {
-  'button.idle': '整理意图',
-  'button.busy': '整理中…',
-  'button.error': '重试整理',
+  'button.idle': '编译意图',
+  'button.busy': '编译中…',
+  'button.error': '重试编译',
   'button.stale': '未覆盖新内容',
   'button.long': '草稿过长',
-  'title.idle': '整理为简洁、忠实、可执行的意图；不会自动发送',
-  'title.busy': '正在整理意图…',
-  'title.error': '整理失败，原草稿未更改；点击重试',
+  'title.idle': '编译为简洁、忠实、可执行的意图；不会自动发送',
+  'title.busy': '正在编译意图…',
+  'title.error': '编译失败，原草稿未更改；点击重试',
   'title.stale': '检测到你继续编辑，因此没有覆盖新内容',
   'title.long': '草稿超过 20,000 个字符，插件不会截断处理',
 }
 
 const EN = {
-  'button.idle': 'Clarify intent',
-  'button.busy': 'Clarifying…',
+  'button.idle': 'Compile intent',
+  'button.busy': 'Compiling…',
   'button.error': 'Retry',
   'button.stale': 'New edits kept',
   'button.long': 'Draft too long',
-  'title.idle': 'Turn the draft into a concise, faithful, executable intent; never auto-send',
-  'title.busy': 'Clarifying intent…',
-  'title.error': 'Rewrite failed and the draft was left unchanged; click to retry',
-  'title.stale': 'You edited the draft while rewriting, so the newer text was kept',
+  'title.idle': 'Compile the draft into a concise, faithful, executable intent; never auto-send',
+  'title.busy': 'Compiling intent…',
+  'title.error': 'Compilation failed and the draft was left unchanged; click to retry',
+  'title.stale': 'You edited the draft while compiling, so the newer text was kept',
   'title.long': 'Drafts over 20,000 characters are never silently truncated',
 }
 
@@ -61,10 +61,10 @@ function installStyle() {
 export function apply(ctx) {
   installStyle()
 
-  ctx.effect(() => ctx.locale.register(ID, { zh: ZH, en: EN }), 'intent-rewrite-gate: locale')
+  ctx.effect(() => ctx.locale.register(ID, { zh: ZH, en: EN }), 'vibe-intent-compiler: locale')
   const t = ctx.locale.bind(ID)
 
-  function IntentRewriteButton(props) {
+  function VibeIntentCompilerButton(props) {
     const input = props.useInput((state) => state)
     const inputActions = props.inputActions
     const sessionId = props.sessionId ? String(props.sessionId) : ''
@@ -88,7 +88,7 @@ export function apply(ctx) {
     const labelKey = isLong ? 'button.long' : `button.${status}`
     const titleKey = isLong ? 'title.long' : `title.${status}`
 
-    const rewrite = async () => {
+    const compileDraft = async () => {
       if (disabled) return
       const source = draft
       const revision = input.draftRev
@@ -106,7 +106,7 @@ export function apply(ctx) {
         const result = response?.ok ? response.value?.result : undefined
         if (result?.kind !== 'success' || typeof result.text !== 'string'
           || result.text.trim().length === 0) {
-          throw new Error('rewrite command failed')
+          throw new Error('intent compilation command failed')
         }
 
         const current = inputRef.current
@@ -119,7 +119,7 @@ export function apply(ctx) {
         if (mountedRef.current) setStatus('idle')
       } catch (error) {
         if (!controller.signal.aborted && mountedRef.current) {
-          console.error('intent-rewrite-gate: rewrite failed; draft left unchanged')
+          console.error('vibe-intent-compiler: compilation failed; draft left unchanged')
           setStatus('error')
         }
       } finally {
@@ -129,15 +129,15 @@ export function apply(ctx) {
 
     return createElement('button', {
       type: 'button',
-      className: 'irg-button',
+      className: 'vic-button',
       disabled,
-      onClick: rewrite,
+      onClick: compileDraft,
       title: t(titleKey),
       'aria-label': t(titleKey),
       'aria-live': 'polite',
     },
     isBusy
-      ? createElement('span', { className: 'irg-spinner', 'aria-hidden': 'true' })
+      ? createElement('span', { className: 'vic-spinner', 'aria-hidden': 'true' })
       : createElement('span', { 'aria-hidden': 'true' }, '✦'),
     createElement('span', null, t(labelKey)))
   }
@@ -145,10 +145,10 @@ export function apply(ctx) {
   ctx.slots.inject('conversation.input.right', () => ctx.slots.register(
     {
       name: 'conversation.input.right',
-      id: 'intent-rewrite-gate',
+      id: 'vibe-intent-compiler',
       order: 100,
-      label: 'Clarify intent',
+      label: 'Compile intent',
     },
-    (props) => createElement(IntentRewriteButton, props),
+    (props) => createElement(VibeIntentCompilerButton, props),
   ))
 }

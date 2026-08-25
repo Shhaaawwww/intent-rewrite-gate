@@ -4,8 +4,6 @@
 
 A one-click DeepSeek Harness plugin that turns a Vibe Coder's messy draft into a concise, faithful, and actionable instruction—without inventing details.
 
-> Repository and plugin ID: `intent-rewrite-gate`. The stable technical ID is kept for installation compatibility.
-
 This is not a general-purpose prompt enhancer. It reads the complete, unsent draft in the DeepSeek Harness composer, reorganizes only what the user actually said, and fills the result back in place. The user reviews, edits, and sends it.
 
 ## Install
@@ -14,23 +12,23 @@ Requires DeepSeek Harness `0.1.1-rc.2` or later with a default model already con
 
 ```bash
 npm install -g @deepseek-ai/dsh
-dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 dsh web
 ```
 
-Restart the Web UI after installation. The `✦ Clarify intent` button will appear next to the send button.
+Restart the Web UI after installation. The `✦ Compile intent` button will appear next to the send button.
 
 If you run Harness through `npx`:
 
 ```bash
-npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
+npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 npx @deepseek-ai/dsh web
 ```
 
 ## Use
 
 1. Write a natural, fragmented, or self-correcting request in the composer.
-2. Click `✦ Clarify intent`.
+2. Click `✦ Compile intent`.
 3. Review the rewritten draft, edit it if needed, and send it yourself.
 
 Example:
@@ -63,7 +61,7 @@ After: Fix the recent recurring login issue. Treat the token as a possible cause
 ## Local installation
 
 ```bash
-dsh plugin --profile web add /absolute/path/to/intent-rewrite-gate
+dsh plugin --profile web add /absolute/path/to/vibe-intent-compiler
 dsh web
 ```
 
