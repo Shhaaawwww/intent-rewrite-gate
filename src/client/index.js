@@ -1,4 +1,4 @@
-/** DeepSeek Harness browser half for Intent Rewrite Gate. */
+/** DeepSeek Harness browser half for Vibe Intent Compiler. */
 
 import { createElement, useEffect, useRef, useState } from 'react'
 

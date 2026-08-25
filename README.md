@@ -1,68 +1,73 @@
-# Intent Rewrite Gate for DeepSeek Harness
+# Vibe Intent Compiler
 
-把 Vibe Coder 的混乱表达整理成简洁、忠实、可执行的意图，并且不擅自增加细节。
+[简体中文](README.zh-CN.md)
 
-它不是通用“提示词润色器”。插件只做一件事：读取 DeepSeek Harness 输入框里的完整草稿，保守整理后原位回填；是否继续修改、是否发送，始终由用户决定。
+A one-click DeepSeek Harness plugin that turns a Vibe Coder's messy draft into a concise, faithful, and actionable instruction—without inventing details.
 
-## 安装
+> Repository and plugin ID: `intent-rewrite-gate`. The stable technical ID is kept for installation compatibility.
 
-需要 DeepSeek Harness `0.1.1-rc.2` 或更高版本，并已在 Harness 中配置好默认模型。
+This is not a general-purpose prompt enhancer. It reads the complete, unsent draft in the DeepSeek Harness composer, reorganizes only what the user actually said, and fills the result back in place. The user reviews, edits, and sends it.
+
+## Install
+
+Requires DeepSeek Harness `0.1.1-rc.2` or later with a default model already configured.
 
 ```bash
 npm install -g @deepseek-ai/dsh
-dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.0"
+dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
 dsh web
 ```
 
-安装后重启 Web UI，输入框发送按钮旁会出现 `✦ 整理意图`。
+Restart the Web UI after installation. The `✦ Clarify intent` button will appear next to the send button.
 
-如果只通过 `npx` 使用 Harness：
+If you run Harness through `npx`:
 
 ```bash
-npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.0"
+npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/intent-rewrite-gate#v0.2.1"
 npx @deepseek-ai/dsh web
 ```
 
-## 使用
+## Use
 
-1. 在输入框中写下自然、零散或反复修正的需求。
-2. 点击 `✦ 整理意图`。
-3. 检查回填结果，按需继续编辑，然后自行发送。
+1. Write a natural, fragmented, or self-correcting request in the composer.
+2. Click `✦ Clarify intent`.
+3. Review the rewritten draft, edit it if needed, and send it yourself.
 
-示例：
+Example:
 
 ```text
-输入：登录最近老出问题，可能是 token，界面也改好看点，算了界面先别动。
-回填：修复最近频繁出现的登录问题；将 token 作为待验证的可能原因，不要修改界面。
+Before: Login keeps breaking lately, maybe it's the token. Make the UI nicer too—actually, leave the UI alone for now.
+
+After: Fix the recent recurring login issue. Treat the token as a possible cause to investigate, and do not change the UI.
 ```
 
-## 产品原则
+## What makes it different
 
-- 只使用草稿中明确存在的信息。
-- 后面的修正只覆盖与其冲突的旧表述，删除已撤回的想法。
-- 保留事实、限制、禁止项、偏好和待验证猜测之间的区别。
-- 原样保留代码、命令、路径、URL、错误信息、标识符和技术术语。
-- 不添加项目事实、实现细节、文件、框架、步骤、测试或验收标准。
-- 短输入保持短；正常结果不会超过有效原文的约两倍。
-- 不执行任务，不自动发送。
+- Uses only information explicitly present in the draft.
+- Treats later corrections as replacements only when they conflict with earlier wording.
+- Removes withdrawn ideas while preserving constraints, preferences, and uncertainty.
+- Preserves code, commands, paths, URLs, error messages, identifiers, schema keys, and technical terms.
+- Does not invent project facts, files, frameworks, implementation details, steps, tests, acceptance criteria, features, or permissions.
+- Keeps short inputs short; normal output is limited to roughly twice the effective source length.
+- Never executes the task or sends the message automatically.
 
-## 设计边界
+## Boundaries and privacy
 
-- 首版处理完整草稿，不支持只改写当前选区。
-- 不监听双击空格，避免与中文输入法、代码和 Markdown 冲突。
-- 使用 Harness 已配置的默认模型，不额外保存 API Key。
-- 改写期间如果用户继续输入，旧结果会被丢弃，不覆盖新内容。
-- 原始草稿不会写入命令日志；改写结果会作为命令完成结果保留在 Harness 会话记录中。
-- 超过 20,000 个字符的草稿不会被静默截断，而是保持原文不变。
+- Version 0.2 rewrites the complete draft, not a selected range.
+- It does not use a double-space shortcut, avoiding conflicts with IMEs, code, and Markdown.
+- It uses the default model already configured in Harness and stores no additional API key.
+- If the draft changes during rewriting, the stale result is discarded instead of overwriting new input.
+- The raw draft is excluded from the command input log. The rewritten result remains in the Harness session as the command result.
+- Drafts longer than 20,000 characters are left unchanged rather than silently truncated.
 
-## 本地安装
+## Local installation
 
 ```bash
 dsh plugin --profile web add /absolute/path/to/intent-rewrite-gate
 dsh web
 ```
 
-插件提交了可直接加载的构建产物，安装时不运行构建脚本。
+Prebuilt artifacts are committed, so installation does not run build scripts.
 
 ## License
 

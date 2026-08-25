@@ -1,6 +1,6 @@
 {
   "name": "dsh-intent-rewrite-gate",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A conservative intent compiler for Vibe Coders in DeepSeek Harness: clarify messy drafts without inventing details, then fill the result back into the composer.",
   "type": "module",
   "engines": {
@@ -17,6 +17,7 @@
     "src",
     "cordis.patch.yml",
     "README.md",
+    "README.zh-CN.md",
     "LICENSE"
   ],
   "scripts": {
@@ -28,6 +29,7 @@
     "deepseek-harness",
     "vibe-coding",
     "intent",
+    "intent-compiler",
     "prompt-rewrite"
   ],
   "repository": {

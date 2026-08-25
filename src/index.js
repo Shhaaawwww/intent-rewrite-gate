@@ -1,4 +1,4 @@
-/** DeepSeek Harness host half for Intent Rewrite Gate. */
+/** DeepSeek Harness host half for Vibe Intent Compiler. */
 
 export const name = 'intent-rewrite-gate'
 export const inject = ['llm', 'commands', 'agentDefaultModel']
