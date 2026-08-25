@@ -51,7 +51,6 @@ async function compileOnce(ctx, draft, signal) {
     messages: [messageFor(draft)],
     maxTokens: MAX_OUTPUT_TOKENS,
     signal,
-    ...(route.reasoningEffort === undefined ? {} : { reasoningEffort: route.reasoningEffort }),
   }
 
   const blocks = []

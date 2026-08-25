@@ -22,21 +22,21 @@ const CSS = `
 `
 
 const ZH = {
-  'button.idle': '编译意图',
-  'button.busy': '编译中…',
-  'button.error': '重试编译',
+  'button.idle': 'Clarify',
+  'button.busy': 'Clarifying…',
+  'button.error': 'Retry',
   'button.stale': '未覆盖新内容',
   'button.long': '草稿过长',
-  'title.idle': '编译为简洁、忠实、可执行的意图；不会自动发送',
-  'title.busy': '正在编译意图…',
-  'title.error': '编译失败，原草稿未更改；点击重试',
+  'title.idle': '把当前草稿整理成简洁、忠实、可执行的指令；不会自动发送',
+  'title.busy': '正在整理当前草稿…',
+  'title.error': '整理失败，原草稿未更改；点击重试',
   'title.stale': '检测到你继续编辑，因此没有覆盖新内容',
   'title.long': '草稿超过 20,000 个字符，插件不会截断处理',
 }
 
 const EN = {
-  'button.idle': 'Compile intent',
-  'button.busy': 'Compiling…',
+  'button.idle': 'Clarify',
+  'button.busy': 'Clarifying…',
   'button.error': 'Retry',
   'button.stale': 'New edits kept',
   'button.long': 'Draft too long',
@@ -147,7 +147,7 @@ export function apply(ctx) {
       name: 'conversation.input.right',
       id: 'vibe-intent-compiler',
       order: 100,
-      label: 'Compile intent',
+      label: 'Clarify',
     },
     (props) => createElement(VibeIntentCompilerButton, props),
   ))

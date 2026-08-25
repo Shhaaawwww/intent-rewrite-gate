@@ -18,17 +18,17 @@ Requirements:
 ```bash
 npm install -g @deepseek-ai/dsh pnpm
 pnpm --version
-dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 dsh web
 ```
 
-The plugin command must complete successfully before starting the Web UI. Open or create a conversation; the `✦ Compile intent` button appears in the conversation composer, not on the landing page.
+The plugin command must complete successfully before starting the Web UI. Open or create a conversation; the `✦ Clarify` button appears in the conversation composer, not on the landing page.
 
 If you run Harness through `npx`:
 
 ```bash
 npm install -g pnpm
-npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 npx @deepseek-ai/dsh web
 ```
 
@@ -39,7 +39,7 @@ If Harness reports `pnpm not found on PATH`, the plugin has not been installed y
 ```bash
 npm install -g pnpm
 pnpm --version
-dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 dsh web
 ```
 
@@ -48,7 +48,7 @@ Warnings about `node-domexception` or peer dependencies are non-fatal when insta
 ## Use
 
 1. Write a natural, fragmented, or self-correcting request in the composer.
-2. Click `✦ Compile intent`.
+2. Click `✦ Clarify`.
 3. Review the rewritten draft, edit it if needed, and send it yourself.
 
 Example:
@@ -73,7 +73,7 @@ After: Fix the recent recurring login issue. Treat the token as a possible cause
 
 - Version 0.3 rewrites the complete draft, not a selected range.
 - It does not use a double-space shortcut, avoiding conflicts with IMEs, code, and Markdown.
-- It uses the default model already configured in Harness and stores no additional API key.
+- It uses the default provider and model already configured in Harness, stores no additional API key, and does not inherit the conversation's reasoning effort.
 - If the draft changes during rewriting, the stale result is discarded instead of overwriting new input.
 - The raw draft is excluded from the command input log. The rewritten result remains in the Harness session as the command result.
 - Drafts longer than 20,000 characters are left unchanged rather than silently truncated.

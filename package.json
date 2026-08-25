@@ -1,6 +1,6 @@
 {
   "name": "dsh-vibe-intent-compiler",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A conservative intent compiler for Vibe Coders in DeepSeek Harness: clarify messy drafts without inventing details, then fill the result back into the composer.",
   "type": "module",
   "engines": {

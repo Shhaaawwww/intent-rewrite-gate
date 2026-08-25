@@ -18,17 +18,17 @@
 ```bash
 npm install -g @deepseek-ai/dsh pnpm
 pnpm --version
-dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 dsh web
 ```
 
-插件安装命令必须成功完成后再启动 Web UI。创建或进入一个对话，`✦ 编译意图` 会显示在对话输入框中，不会显示在首页。
+插件安装命令必须成功完成后再启动 Web UI。创建或进入一个对话，`✦ Clarify` 会显示在对话输入框中，不会显示在首页。
 
 如果通过 `npx` 使用 Harness：
 
 ```bash
 npm install -g pnpm
-npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 npx @deepseek-ai/dsh web
 ```
 
@@ -39,7 +39,7 @@ npx @deepseek-ai/dsh web
 ```bash
 npm install -g pnpm
 pnpm --version
-dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.1"
 dsh web
 ```
 
@@ -48,7 +48,7 @@ dsh web
 ## 使用
 
 1. 在输入框中写下自然、零散或反复修正的需求。
-2. 点击 `✦ 编译意图`。
+2. 点击 `✦ Clarify`。
 3. 检查回填结果，按需继续编辑，然后自行发送。
 
 示例：
@@ -73,7 +73,7 @@ dsh web
 
 - 0.3 版本处理完整草稿，不支持只改写当前选区。
 - 不监听双击空格，避免与输入法、代码和 Markdown 冲突。
-- 使用 Harness 已配置的默认模型，不额外保存 API Key。
+- 使用 Harness 已配置的默认 Provider 和模型，不额外保存 API Key，也不继承主对话的 reasoning effort。
 - 改写期间如果用户继续输入，旧结果会被丢弃，不会覆盖新内容。
 - 原始草稿不会写入命令输入日志；改写结果会作为命令结果保留在 Harness 会话记录中。
 - 超过 20,000 个字符的草稿不会被静默截断，而是保持原文不变。
