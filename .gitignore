@@ -1,0 +1,7 @@
+node_modules/
+pnpm-lock.yaml
+*.tgz
+.env*
+.npmrc
+*.key
+*.pem

@@ -1,6 +1,6 @@
 {
   "name": "dsh-vibe-intent-compiler",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A conservative intent compiler for Vibe Coders in DeepSeek Harness: clarify messy drafts without inventing details, then fill the result back into the composer.",
   "type": "module",
   "engines": {
@@ -18,11 +18,13 @@
     "cordis.patch.yml",
     "README.md",
     "README.zh-CN.md",
+    "SECURITY.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "tsdown",
-    "check": "tsdown && node --check lib/index.js && node --check lib/client.js"
+    "test": "node --test",
+    "check": "tsdown && node --check lib/index.js && node --check lib/client.js && node --test"
   },
   "keywords": [
     "dsh-plugin",
@@ -45,7 +47,7 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "tsdown": "^0.22.14"
+    "tsdown": "0.22.14"
   },
   "dsh": {
     "client": {
