@@ -8,22 +8,42 @@
 
 ## 安装
 
-需要 DeepSeek Harness `0.1.1-rc.2` 或更高版本，并已在 Harness 中配置默认模型。
+安装前需要：
+
+- Node.js `22.19.x` 或 `24+`（`^22.19.0 || >=24.0.0`）。
+- DeepSeek Harness `0.1.1-rc.2` 或更高版本。
+- `pnpm` 已安装并可通过 `PATH` 调用。即使 Harness 本身通过 `npm` 安装或通过 `npx` 启动，它仍使用 `pnpm` 管理 Profile 插件。
+- 已在 Harness 中配置默认模型。
 
 ```bash
-npm install -g @deepseek-ai/dsh
+npm install -g @deepseek-ai/dsh pnpm
+pnpm --version
 dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 dsh web
 ```
 
-安装后重启 Web UI，输入框发送按钮旁会出现 `✦ 编译意图`。
+插件安装命令必须成功完成后再启动 Web UI。创建或进入一个对话，`✦ 编译意图` 会显示在对话输入框中，不会显示在首页。
 
 如果通过 `npx` 使用 Harness：
 
 ```bash
+npm install -g pnpm
 npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 npx @deepseek-ai/dsh web
 ```
+
+### 安装问题排查
+
+如果 Harness 显示 `pnpm not found on PATH`，说明插件尚未安装。先关闭 Web UI，然后执行：
+
+```bash
+npm install -g pnpm
+pnpm --version
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh web
+```
+
+如果安装最终显示 `Done`，`node-domexception` 弃用提示或 peer dependency 警告不会阻止插件安装。如果仍未看到按钮，请重启 `dsh web`、进入一个对话并强制刷新页面。
 
 ## 使用
 
@@ -51,7 +71,7 @@ npx @deepseek-ai/dsh web
 
 ## 边界与隐私
 
-- 0.2 版本处理完整草稿，不支持只改写当前选区。
+- 0.3 版本处理完整草稿，不支持只改写当前选区。
 - 不监听双击空格，避免与输入法、代码和 Markdown 冲突。
 - 使用 Harness 已配置的默认模型，不额外保存 API Key。
 - 改写期间如果用户继续输入，旧结果会被丢弃，不会覆盖新内容。

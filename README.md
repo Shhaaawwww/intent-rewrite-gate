@@ -8,22 +8,42 @@ This is not a general-purpose prompt enhancer. It reads the complete, unsent dra
 
 ## Install
 
-Requires DeepSeek Harness `0.1.1-rc.2` or later with a default model already configured.
+Requirements:
+
+- Node.js `22.19.x` or `24+` (`^22.19.0 || >=24.0.0`).
+- DeepSeek Harness `0.1.1-rc.2` or later.
+- `pnpm` available on `PATH`. Harness uses it internally to manage profile plugins, even when Harness itself was installed with `npm` or launched through `npx`.
+- A default model configured in Harness.
 
 ```bash
-npm install -g @deepseek-ai/dsh
+npm install -g @deepseek-ai/dsh pnpm
+pnpm --version
 dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 dsh web
 ```
 
-Restart the Web UI after installation. The `✦ Compile intent` button will appear next to the send button.
+The plugin command must complete successfully before starting the Web UI. Open or create a conversation; the `✦ Compile intent` button appears in the conversation composer, not on the landing page.
 
 If you run Harness through `npx`:
 
 ```bash
+npm install -g pnpm
 npx @deepseek-ai/dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
 npx @deepseek-ai/dsh web
 ```
+
+### Installation troubleshooting
+
+If Harness reports `pnpm not found on PATH`, the plugin has not been installed yet. Stop the Web UI, then run:
+
+```bash
+npm install -g pnpm
+pnpm --version
+dsh plugin --profile web add "github:Shhaaawwww/vibe-intent-compiler#v0.3.0"
+dsh web
+```
+
+Warnings about `node-domexception` or peer dependencies are non-fatal when installation finishes with `Done`. If the button is still missing, restart `dsh web`, enter a conversation, and hard-refresh the page.
 
 ## Use
 
@@ -51,7 +71,7 @@ After: Fix the recent recurring login issue. Treat the token as a possible cause
 
 ## Boundaries and privacy
 
-- Version 0.2 rewrites the complete draft, not a selected range.
+- Version 0.3 rewrites the complete draft, not a selected range.
 - It does not use a double-space shortcut, avoiding conflicts with IMEs, code, and Markdown.
 - It uses the default model already configured in Harness and stores no additional API key.
 - If the draft changes during rewriting, the stale result is discarded instead of overwriting new input.
