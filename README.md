@@ -12,7 +12,15 @@ Intent Rewrite Gate is a small, instruction-only Skill. It cleans up filler, mix
 $intent-rewrite-gate <your rough request>
 ```
 
-That is the entire interface.
+That is the default interface.
+
+Optional controls are available when needed:
+
+```text
+$intent-rewrite-gate strict <use only my words>
+$intent-rewrite-gate grounded <use minimal context to resolve meaning>
+$intent-rewrite-gate audit <return the prompt plus a fidelity report>
+```
 
 ## Example
 
