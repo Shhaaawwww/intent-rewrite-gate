@@ -1,0 +1,60 @@
+{
+  "name": "dsh-intent-rewrite-gate",
+  "version": "0.2.0",
+  "description": "A conservative intent compiler for Vibe Coders in DeepSeek Harness: clarify messy drafts without inventing details, then fill the result back into the composer.",
+  "type": "module",
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "check": "tsdown && node --check lib/index.js && node --check lib/client.js"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "vibe-coding",
+    "intent",
+    "prompt-rewrite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shhaaawwww/intent-rewrite-gate.git"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent-default-model": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-commands": "^0.1.1-rc.2",
+    "@deepseek-ai/dsh-llm": "^0.1.1-rc.2",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.14"
+  },
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-api-remotes"
+      ],
+      "platform": "web"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

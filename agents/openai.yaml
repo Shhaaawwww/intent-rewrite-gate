@@ -1,6 +1,0 @@
-interface:
-  display_name: "Intent Rewrite Gate"
-  short_description: "Clarify messy coding requests without inventing details"
-  default_prompt: "Use $intent-rewrite-gate to clean up my rough request below without expanding or changing its intent."
-policy:
-  allow_implicit_invocation: false
